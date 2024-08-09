@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp Page</title>
+</head>
+<body>
+
+    <section>
+        <!--container for a box -->
+        <div class="container">
+            <!--row for using griding of 12 col with row -->
+            <div class="row">
+                <!--making 6 col and avoiding 3-3 col from left & right -->
+                <div class="col-md-6 offset-md-3">
+                    <!--creating card with top margin of 3 -->
+                    <div class="my-card mt-3">
+
+                        <div th:if="${message}" th:classappend="${message.type}" class="alert" role="alert">
+                            <p class="text-center" th:text="${message.content}"></p>
+                            <th:block th:remove="all"></th:block>
+                        </div>
+                        <!--inserting an image in center transparent -->
+                       <div class="container text-center">
+                        <img class="" style="width: 80px;" th:src="@{/image/membership.png}">
+                       </div>
+                        <!--signup name on the top of the inputs-->
+                        <h1 class="text-center">SignUp here</h1>
+                        <!--form section for inserting every detail required by user -->
+                        <form th:action="@{/do-register}" method="post" th:object="${user}" novalidate>
+
+                            <!--name field -->
+                            <div class="mb-3">
+                                <label for="name_field" class="form-label">User Name</label>
+                                <input type="text"
+                                       name="name"
+                                       class="form-control"
+                                       id="name_field"
+                                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                                       aria-describedby="nameHelp"
+                                        placeholder="Enter here"
+                                       th:value="${user.name}"
+                                />
+                                <!--User Entity validation code and appending via th:classappend <div th:each="nameError : ${#fields.Errors('name')}"  th:text="${nameError}"></div> -->
+                                <div th:each="nameError : ${#fields.errors('name')}" th:text="${nameError}" class="invalid-feedback">
+                                    Please provide a valid name.
+                                </div>
+                            </div>
+
+                            <!--email field -->
+                            <div class="mb-3">
+                                <label for="email_field" class="form-label">Email</label>
+                                <input type="text"
+                                       name="email"
+                                       class="form-control"
+                                       id="email_field"
+                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                       aria-describedby="emailHelp"
+                                       placeholder="Enter here"
+                                       th:value="${user.email}"
+                                />
+
+                               <div th:each="emailError : ${#fields.errors('email')}" th:text="${emailError}" class="invalid-feedback">
+                                    Please provide a valid email.
+                                </div>
+                            </div>
+
+                            <!--password field -->
+                            <div class="mb-3">
+                                <label for="password_field" class="form-label">Password</label>
+                                <input type="text"
+                                       name="password"
+                                       class="form-control"
+                                       id="password_field"
+                                       aria-describedby="passwordHelp"
+                                       placeholder="Enter here"
+                                />
+                                <!--<div th:each="nameError : ${#fields.errors('name')}" th:text="${nameError}" class="invalid-feedback">
+                                    Please provide a valid password.
+                                </div>-->
+                            </div>
+
+                            <!--about field -->
+                            <div class="form-group">
+                                <label for="about">About</label>
+                                <textarea class="form-control"
+                                          th:value="${user.about}"
+
+                                          placeholder="Leave a comment here"
+                                          id="about">
+                                </textarea>
+
+                               <!-- <div th:each="aboutError : ${#fields.errors('about')}" th:text="${aboutError}" class="invalid-feedback">
+                                    Please provide a valid about.
+                                </div>-->
+                            </div>
+
+                            <!--terms and condition agreement field -->
+                            <div class="form-group from-check text-center">
+                                <input type="checkbox"
+                                name="agreement"
+                                class="from-check-input"
+                                id="agreement"
+                                >
+
+                                <label for="agreement">Accept terms and conditions</label>
+                            </div>
+
+
+                            <!--submit and reset button field -->
+                            <div class="container text-center">
+                                <button type="submit" class="btn bg-primary btn-block text-white">Signup</button>
+                                <button type="reset" class="btn btn-secondary btn-block">Reset</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+</html>
